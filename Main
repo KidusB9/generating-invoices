@@ -1,0 +1,62 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class InvoiceGenerator {
+    public static void main(String[] args) {
+        ArrayList<Item> items = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter the item details
+        while (true) {
+            System.out.println("Enter the item name (or 'exit' to finish):");
+            String name = scanner.nextLine();
+            if (name.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.println("Enter the item price:");
+            double price = Double.parseDouble(scanner.nextLine());
+
+            System.out.println("Enter the item quantity:");
+            int quantity = Integer.parseInt(scanner.nextLine());
+
+            Item item = new Item(name, price, quantity);
+            items.add(item);
+        }
+
+        // Generate the invoice
+        double total = 0;
+        System.out.println("Invoice:");
+        for (Item item : items) {
+            double subtotal = item.getPrice() * item.getQuantity();
+            total += subtotal;
+            System.out.println(item.getName() + "\t" + item.getPrice() + "\t" + item.getQuantity() + "\t" + subtotal);
+        }
+        System.out.println("Total: " + total);
+    }
+
+    static class Item {
+        private String name;
+        private double price;
+        private int quantity;
+
+        public Item(String name, double price, int quantity) {
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+    }
+}
+
